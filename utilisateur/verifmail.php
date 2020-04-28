@@ -158,7 +158,7 @@ if (mail($destinataire, $objet, $message, $headers)) // Envoi du message
 	//echo $message;
 }
 else // Non envoyé
-
+   
 
 {
 	echo json_encode(array( 'RESPONSE2'=>'Votre message n\'a pas pu être envoyé' )); 
