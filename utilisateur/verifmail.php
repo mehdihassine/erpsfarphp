@@ -23,8 +23,12 @@ $loginuser = $tab[0]["loginuser"];
 $mpduser = $tab[0]["mpduser"];
 $email = $tab[0]["email"];
 
-
-
+$lenght=8;
+$random=substr(str_shuffle("abcdefjhijklmnopqrstuvwxyz0123456789"),0,$lenght);
+$sql =  "UPDATE `user` SET `mpduser`='$random'
+		 WHERE `iduser`='$iduser  ' "; 
+		$result = mysqli_query($conn, $sql);
+		if ($result===true) {	
 $destinataire = $email ;
 // Pour les champs $expediteur / $copie / $destinataire, séparer par une virgule s'il y a plusieurs adresses
 $expediteur = 'mehdihassine2@gmail.com';
@@ -132,7 +136,7 @@ $message = '
 												<tr>
 													<td data-color="text" data-size="size text" data-min="10" data-max="26" data-link-color="link text color" data-link-style="font-weight:bold; text-decoration:underline; color:#40aceb;" align="center" style="font:bold 16px/25px Arial, Helvetica, sans-serif; color:#888; padding:0 0 23px;">
 												Cher Utilisateur '.$nomuser.'&nbsp;'.$prenomuser.' <br>
-												Votre Mot de passe est: <b>'.$mpduser.'<b>
+												Votre Mot de passe est: <b>'.$random.'<b>
 							 
 													</td>
 												</tr>
@@ -150,6 +154,7 @@ $message = '
 if (mail($destinataire, $objet, $message, $headers)) // Envoi du message
 {
 	echo json_encode(array( 'RESPONSE'=>'Votre message a bien été envoyé' )); 
+	echo $random;
 	//echo $message;
 }
 else // Non envoyé
@@ -158,6 +163,10 @@ else // Non envoyé
 {
 	echo json_encode(array( 'RESPONSE2'=>'Votre message n\'a pas pu être envoyé' )); 
 }
+		}
+		else{
+			echo json_encode(array( 'RESPONSE'=>'Erreur modification ' )); 
+		}
 
 
 
