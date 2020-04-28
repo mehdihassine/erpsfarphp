@@ -24,7 +24,7 @@ $mpduser = $tab[0]["mpduser"];
 $email = $tab[0]["email"];
 
 $lenght=8;
-$random=substr(str_shuffle("abcdefjhijklmnopqrstuvwxyz0123456789"),0,$lenght);
+$random=substr(str_shuffle("0a1b2c3d4e5f6j7h8i9jklmnopqrstuvwxyz"),0,$lenght);
 $sql =  "UPDATE `user` SET `mpduser`='$random'
 		 WHERE `iduser`='$iduser  ' "; 
 		$result = mysqli_query($conn, $sql);
