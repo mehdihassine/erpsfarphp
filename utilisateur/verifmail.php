@@ -24,14 +24,14 @@ $mpduser = $tab[0]["mpduser"];
 $email = $tab[0]["email"];
 
 $lenght=8;
-$random=substr(str_shuffle("0a1b2c3d4e5f6j7h8i9jklmnopqrstuvwxyz"),0,$lenght);
+$random=substr(str_shuffle("0a1b2c3d4e5f6j7h8i9jklmnopqrstuvwxyz"),0,$lenght); // ya3tik mtp aleatoire 
 $sql =  "UPDATE `user` SET `mpduser`='$random'
 		 WHERE `iduser`='$iduser  ' "; 
 		$result = mysqli_query($conn, $sql);
 		if ($result===true) {	
-$destinataire = $email ;
+$destinataire = $email ;// lechkoun bech tab3et 
 // Pour les champs $expediteur / $copie / $destinataire, séparer par une virgule s'il y a plusieurs adresses
-$expediteur = 'mehdihassine2@gmail.com';
+$expediteur = 'mehdihassine2@gmail.com'; // chkoun bech yab3et 
 
 $objet = 'Recuperation mot de Passe '; // Objet du message
 $headers  = 'MIME-Version: 1.0' . "\n"; // Version MIME
