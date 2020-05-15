@@ -16,6 +16,7 @@ $postdata = file_get_contents("php://input");
 		$nature=$request->nature;
 		$typestockage=$request->typestockage;
 		$seuil=$request->seuil;
+		$unite=$request->unite;
 
 	$sql1 =  " select codearticle FROM  article WHERE codearticle='$codearticle'" ;
 	$result1 = mysqli_query($conn, $sql1);
@@ -30,8 +31,8 @@ $postdata = file_get_contents("php://input");
 	
 	else { 
 		
-		$sql2 =  "INSERT INTO `article`(`idarticle`, `codearticle`, `libellearticle`, `description`, `seuilmin`, `nature`, `typestockage`, `typearticle`) 
-		VALUES ('NULL','$codearticle','$libelle','$description','$seuil','$nature','$typestockage','$type') " ; 
+		$sql2 =  "INSERT INTO `article`(`idarticle`, `codearticle`, `libellearticle`, `description`, `seuilmin`, `nature`, `typestockage`, `typearticle`,`unite`) 
+		VALUES ('NULL','$codearticle','$libelle','$description','$seuil','$nature','$typestockage','$type','$unite') " ; 
 		$result2 = mysqli_query($conn, $sql2);
 		
 		if ($result2===true) {	

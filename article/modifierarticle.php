@@ -12,10 +12,10 @@ $postdata = file_get_contents("php://input");
 		$nature=$request->nature;
 		$typestockage=$request->typestockage;
 		$seuil=$request->seuil;
-		
+		$unite=$request->unite;
 		
 		$sql =  "UPDATE `article` SET `idarticle`='$idarticle', `codearticle`='$codearticle',`libellearticle`='$libelle',`description`='$description',
-		`seuilmin`='$seuil',`nature`='$nature',`typestockage`='$typestockage',`typearticle`='$type' WHERE `idarticle`='$idarticle' "; 
+		`seuilmin`='$seuil',`nature`='$nature',`typestockage`='$typestockage',`typearticle`='$type',`unite`='$unite' WHERE `idarticle`='$idarticle' "; 
         $result = mysqli_query($conn, $sql);
 		if ($result===true) {	
 
