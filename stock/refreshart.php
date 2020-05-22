@@ -3,8 +3,9 @@ include('../config.php');
 $postdata = file_get_contents("php://input"); 
     if (isset($postdata)) {
         $request = json_decode($postdata);
+		$nreception= $_GET['nreception'];
 		
-		$sql =  "SELECT nfacture, type, COUNT(nligne) as nligne, datesys, SUM(montanttotal) as montanttotal, etat FROM facture GROUP BY nfacture,type" ;
+		$sql =  "SELECT * FROM stock s ,article a WHERE nreception='$nreception' AND s.article_id=a.idarticle" ;
 		
         $result = mysqli_query($conn, $sql);
 		if ($result->num_rows > 0) {	
@@ -14,11 +15,11 @@ $postdata = file_get_contents("php://input");
 		}
 		
 		else { 
-			echo json_encode(array( 'RESPONSE'=>'Aucune facture trouvee' )); 
+			echo json_encode(array( 'RESPONSE'=>'Aucune reception trouvee' )); 
 		}
     }
     else {
-		echo json_encode(array( 'RESPONSE'=>'Erreur facture parametres' ));  
+		echo json_encode(array( 'RESPONSE'=>'Erreur reception parametres' ));  
     }
 	
 	// 			

@@ -13,7 +13,9 @@ $postdata = file_get_contents("php://input");
 		$fournisseur = $request->fournisseur;
 		$prixachat= $request->prixachat;
 		$datefinv = $request->datefinv;
-	
+		
+
+		$numfact = $request->numfact;
 		$remise= $request->remise;
 		$taxe = $request->taxe; 
 		$datesys= date("Y-m-d- H:i:s");//
@@ -57,7 +59,7 @@ $insertart="	INSERT INTO `stock`(`idstock`, `nreception`, `nligne`,
 `article_id`, `emplacement`, `quantite`,
 `qteentree`, `qtesortie`, `fournisseur_id`,
 `prixunitaire`, `prixTotal`, `datefinvaliditer`,
-`dateachat`, `remise`, `taxes`, `commentaire`,`etat`) 
+`dateachat`, `remise`, `taxes`, `commentaire`,`numfact`,`etat`) 
 VALUES ('NULL',
  '$nreception',
  '$nligne1',
@@ -73,7 +75,7 @@ VALUES ('NULL',
 '$datesys',
 '$remise',
 '$taxe',
-'$description','$etat')";
+'$description','$numfact','$etat')";
 $resultinsert=mysqli_query($conn,$insertart);
 if ($resultinsert===true) {
     $resp1=array("$nreception","$nligne","$idarticle","$quantite");
