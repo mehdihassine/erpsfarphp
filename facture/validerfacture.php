@@ -7,10 +7,12 @@ $postdata = file_get_contents("php://input");
 		
         $request = json_decode($postdata);
 		$nfacture = $_GET['nfacture'] ; 
-
+$type="vente";
+$etat="valide";
 // update statut recep
 
-		$sql =  "UPDATE `facture` SET `etat`='valide' WHERE `nfacture` = '$nfacture'";
+		$sql =  "INSERT INTO `facture`(`idfacture`, `nfacture`, `type`, `etat`) 
+		VALUES ('NULL','$nfacture','$type','$etat')";
         $result = mysqli_query($conn, $sql);	
 		$nbrow = mysqli_affected_rows($conn);
 		if ($nbrow>0) { 

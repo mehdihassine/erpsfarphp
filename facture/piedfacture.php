@@ -9,7 +9,7 @@ $postdata = file_get_contents("php://input");
 		
 		$nfacture = $_GET['nfacture'] ; 
 
-		$sql =  "SELECT SUM(montantTHT) as montantTHT, SUM(montanttva) as montanttva, SUM(montanttotal) as montanttotale  FROM facture where nfacture='$nfacture'" ;
+		$sql =  "SELECT SUM(montanthtc) as montantTHT, SUM(montanttva) as montanttva, SUM(montantttc) as montanttotale  FROM facturevente where nfacture='$nfacture'" ;
         $result = mysqli_query($conn, $sql);
 		
 		if ($result->num_rows > 0) {	

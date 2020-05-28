@@ -9,7 +9,7 @@ $postdata = file_get_contents("php://input");
 		
 		$nfacture = $_GET['nfacture'] ; 
 
-		$sql =  "SELECT nligne FROM facture where nfacture='$nfacture' AND `type`='divers'" ;
+		$sql =  "SELECT nligne FROM facturedivers where nfacture='$nfacture' AND " ;
         $result = mysqli_query($conn, $sql);
 		
 		if ($result->num_rows > 0) {	                       

@@ -10,7 +10,7 @@ $postdata = file_get_contents("php://input");
 		$nfacture = $_GET['nfacture'] ;
 		$nligne = $_GET['nligne'] ;
 
-		$sql =  "DELETE FROM facture WHERE nfacture='$nfacture' AND nligne='$nligne'";
+		$sql =  "DELETE FROM facturevente WHERE nfacture='$nfacture' AND nligne='$nligne'";
         $result = mysqli_query($conn, $sql);
 		
 		

@@ -14,17 +14,18 @@ $postdata = file_get_contents("php://input");
 		$prixachat= $request->prixachat;
 		$datefinv = $request->datefinv;
 		
-
+		$types="achat";
 		$numfact = $request->numfact;
 		$remise= $request->remise;
 		$taxe = $request->taxe; 
 		$datesys= date("Y-m-d- H:i:s");//
+		$datesys1=date("Y-m-d");
 		$quantitesort=0;
 		$quantiteTot=$quantite-$quantitesort;
 		$montant=$quantiteTot*$prixachat; 
 		$montantremise=$montant-(($montant*$remise)/100);
 		$montantTTC= round($montantremise+(($montantremise*$taxe)/100),3);
-		
+		$montanttaxe=round(($montantTTC-$montantremise),3);
 		$etat ="creer"; 
 $sql1="SELECT `idfr` from `fournisseur` where`nomfr`='$fournisseur'";
 $result1=mysqli_query($conn,$sql1);
@@ -78,25 +79,47 @@ VALUES ('NULL',
 '$description','$numfact','$etat')";
 $resultinsert=mysqli_query($conn,$insertart);
 if ($resultinsert===true) {
-    $resp1=array("$nreception","$nligne","$idarticle","$quantite");
-    echo json_encode($resp1);
+   
+	
+	$insertfact="	INSERT INTO `factureachat`(`idfacture`, `nfacture`, `nligne`,
+	 `types`, `idarticle`, `quantite`,
+	  `fournisseur`, `datesys`, `montanttva`,
+	   `montanthtc`, `montantttc`) VALUES
+	 ('NULL','$nreception','$nligne1',
+	 '$types','$idarticle','$quantite',
+	 '$idfr','$datesys1','$montanttaxe',
+	 '$montantremise','$montantTTC')";
+$resultfact=mysqli_query($conn,$insertfact);
+if ($resultfact===true) {
+
+	echo json_encode(array("add ligne facture ok"));
+
+	
 }
 else{
-    $resp0=array("Erreur add ligne stock");
-    echo json_encode($resp0);
+   echo json_encode(array("Erreur add ligne facture"));
+  
+
+}
+
+
+}
+
+
+
+else{
+    echo json_encode(array("Erreur add ligne stock"));
 }
 
 
 }else{
 	echo json_encode(array("aucun article trouver"));
-	echo json_encode(array("table"=>"$table",
-								"idfr"=>"$rows"));
+	
 }
 	}
 else{
 	echo json_encode(array("aucun fournisseur trouver"));
-	echo json_encode(array("table"=>"$table",
-								"idfr"=>"$rows"));
+	
 
 }
 

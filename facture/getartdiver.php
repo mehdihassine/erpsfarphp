@@ -8,7 +8,7 @@ $postdata = file_get_contents("php://input");
         $request = json_decode($postdata);
 		$nfacture = $_GET['nfacture'] ; 
 
-		$sql =  "SELECT * FROM facture where nfacture ='$nfacture' and `type`='divers' order by nligne" ;
+		$sql =  "SELECT * FROM facturedivers where nfacture ='$nfacture'  order by nligne" ;
         //$sql =  "SELECT * FROM recep  where nfacture ='$nfacture' order by nligne" ;
 
 		$result = mysqli_query($conn, $sql);

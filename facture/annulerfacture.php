@@ -8,7 +8,7 @@ $postdata = file_get_contents("php://input");
         $request = json_decode($postdata);
 		$nfacture = $_GET['nfacture'] ; 
 
-		$sql =  "DELETE FROM `facture` WHERE `nfacture`='$nfacture'";
+		$sql =  "DELETE FROM `facturevente` WHERE `nfacture`='$nfacture'";
         $result = mysqli_query($conn, $sql);
 				
 		

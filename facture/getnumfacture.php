@@ -4,10 +4,17 @@ include('../config.php');
 $postdata = file_get_contents("php://input"); 
 
     if (isset($postdata)) {
-		
-        $request = json_decode($postdata);
 
-		$sql =  "SELECT MAX(nfacture) As nfacture FROM facture" ;
+		
+		
+		$request = json_decode($postdata);
+		
+
+		// get : type facture = 3 reslt
+		// 3 if 
+		// if 1 : type= vente => 
+
+		$sql =  "SELECT MAX(nfacture) As nfacture FROM facturevente" ;
         $result = mysqli_query($conn, $sql);
 		
 		if ($result->num_rows > 0) {	

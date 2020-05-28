@@ -42,16 +42,15 @@ $postdata = file_get_contents("php://input",true);
 			  
 			  
 			  
-	$insertdepot =  "INSERT INTO `facture`(
-	`idfacture`, `nfacture`, `type`,
-	`montanttotal`, `datesys`, `idfournisseur`,
-	`description`, `idproduit`, `quantite`, `nomclient`,
-	`adresse`, `montanttva`, `montantTHT`,`nligne`,`etat`) 
-	VALUES
-	('','$nfacture','$type',
-	'$montanttotal','$datesys','',''
-	,'$codarticle ','$quantite ','$nomclient',
-	'$adresse',' $montanttva ','$montantTHT','$nligne','$etat')"; 
+	$insertdepot =  "INSERT INTO `facturevente`(`idfacture`, `nfacture`, `nligne`,
+	`types`, `idproduit`, `quantite`,
+	`nomclient`, `adresse`, `datesys`, 
+	`montanttva`, `montanthtc`, `montantttc`) 
+	 VALUES 
+	('NULL','$nfacture','$nligne',
+	'$type','$codarticle','$quantite',
+	'$nomclient','$adresse','$datesys',
+	 '$montanttva','$montantTHT','$montanttotal')"; 
 		
      $resultInsertdp = mysqli_query($conn, $insertdepot);
 	 $nbrow = mysqli_affected_rows($conn);
