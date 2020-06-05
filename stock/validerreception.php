@@ -11,12 +11,12 @@ $postdata = file_get_contents("php://input");
 		$etat='valide';
 
 // update statut recep
-
+insertfacture($conn,$nreception,$type,$etat);
 		$sql =  "UPDATE `stock` SET `etat`='valide' WHERE `nreception` = '$nreception'";
         $result = mysqli_query($conn, $sql);	
 		$nbrow = mysqli_affected_rows($conn);
 		if ($nbrow>0) { 
-			insertfacture($conn,$nreception,$type,$etat);
+		
 		}
 		 else {echo json_encode(array( 'resp'=>'reception non validee' ));}
 	

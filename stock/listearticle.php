@@ -3,22 +3,21 @@ include('../config.php');
 $postdata = file_get_contents("php://input"); 
     if (isset($postdata)) {
         $request = json_decode($postdata);
-		$etat='valide';
-		$sql =  "SELECT  nreception, COUNT(article_id) as nbrarticle ,nomfr,
-		numfact, SUM(quantite) as quantiterecep,dateachat,
-		 SUM(prixTotal) as prixTotal ,etat FROM stock , fournisseur  WHERE  stock.etat='$etat' and (fournisseur.idfr=stock.fournisseur_id  )  GROUP BY nreception " ;
 		
+	
+		$etat='sortie';
+		$sql =  "SELECT  datesortie, COUNT(article_id) as nbrarticle ,
+		 SUM(qtesortie) as quantiterecep
+		 FROM stock   WHERE etat='$etat'   GROUP BY datesortie " ;
         $result = mysqli_query($conn, $sql);
 		if ($result->num_rows > 0) {	
 			while($row = mysqli_fetch_assoc($result))
 			$tab[] =$row; 
-			
-		
 			print(json_encode($tab)); 
 		}
 		
 		else { 
-			echo json_encode(array( 'RESPONSE'=>'Aucune reception trouvee' )); 
+			echo json_encode(array( 'RESPONSE'=>'Aucune production trouvee' )); 
 		}
     }
     else {

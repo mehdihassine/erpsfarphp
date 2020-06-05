@@ -56,11 +56,12 @@ if($result2->num_rows>0){
 	
 
 
-$insertart="	INSERT INTO `stock`(`idstock`, `nreception`, `nligne`, 
+$insertart="INSERT INTO `stock`(`idstock`, `nreception`, `nligne`,
 `article_id`, `emplacement`, `quantite`,
-`qteentree`, `qtesortie`, `fournisseur_id`,
-`prixunitaire`, `prixTotal`, `datefinvaliditer`,
-`dateachat`, `remise`, `taxes`, `commentaire`,`numfact`,`etat`) 
+ `qteentree`, `qtesortie`, `fournisseur_id`,
+  `prixunitaire`, `prixTotal`, `datefinvaliditer`,
+   `dateachat`, `remise`, `taxes`, `commentaire`,
+	`numfact`, `etat`, `datesortie`, `motif`) 
 VALUES ('NULL',
  '$nreception',
  '$nligne1',
@@ -76,7 +77,7 @@ VALUES ('NULL',
 '$datesys',
 '$remise',
 '$taxe',
-'$description','$numfact','$etat')";
+'$description','$numfact','$etat','','')";
 $resultinsert=mysqli_query($conn,$insertart);
 if ($resultinsert===true) {
    
