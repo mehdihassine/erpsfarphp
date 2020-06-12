@@ -84,12 +84,12 @@ if ($resultinsert===true) {
 	
 	$insertfact="	INSERT INTO `factureachat`(`idfacture`, `nfacture`, `nligne`,
 	 `types`, `idarticle`, `quantite`,
-	  `fournisseur`, `datesys`, `montanttva`,
-	   `montanthtc`, `montantttc`) VALUES
+	  `idfournisseur`, `datesys`, `montanttva`,
+	   `montanthtc`, `montantttc`,`numerofacture`) VALUES
 	 ('NULL','$nreception','$nligne1',
 	 '$types','$idarticle','$quantite',
 	 '$idfr','$datesys1','$montanttaxe',
-	 '$montantremise','$montantTTC')";
+	 '$montantremise','$montantTTC','$numfact')";
 $resultfact=mysqli_query($conn,$insertfact);
 if ($resultfact===true) {
 
