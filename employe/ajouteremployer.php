@@ -4,27 +4,16 @@ $postdata = file_get_contents("php://input");
     if (isset($postdata)) {
         $request = json_decode($postdata); 
         $cin = $request->cin;		
-		$nom = $request->nom;
+		$nom =$request->nom;
 		$prenom = $request->prenom;
 		$telephone = $request->telephone;
-		$adress = $request->adress;
-		$cnss=$request->cnss;
-		$typec=$request->typec;
-		$specialite= $request->specialite;
+		$adress =$request->adress;
+		$cnss= $request->cnss;
+		$typec= $request->typec;
+		$specialite=  $request->specialite;
 		
        
-		$sql2="SELECT `idspecialiter` FROM `specialiter` WHERE `libelle`='$specialite'";
-		$result2 = mysqli_query($conn, $sql2);
-		if ($result2->num_rows > 0) {	
-
-									while($row =   mysqli_fetch_assoc($result2))
-									$tab[0] =$row; 
-									$idspecialiter = $tab[0]['idspecialiter'];
-		}
-		else { 
-
-		echo json_encode(array( 'RESPONSE'=>'Aucune specialiter trouvee' )); 
-		}
+		 
 
 
 
@@ -37,7 +26,7 @@ $postdata = file_get_contents("php://input");
 				echo json_encode(array( 'RESPONSE'=>'Cart identite deja existant' )); 
 
 			} 
-			else {
+	 
 
 				$sql23="SELECT `cnssEmployee` FROM `employee` WHERE `cnssEmployee`='$cnss'";
 
@@ -47,18 +36,16 @@ $postdata = file_get_contents("php://input");
 					echo json_encode(array( 'RESPONSE'=>'Compt CNSS deja existant' )); 
 
 	
-				} 
-
-				else { 
+				}  else { 
 				 /////// !!!!!!!
 
-$sql =  "INSERT INTO `employee`(`idEmployee`, `cinEmployee`, `nomEmployee`, 
+$sql =  "INSERT INTO `employee`(`cinEmployee`, `nomEmployee`, 
 `prenomEmployee`, `telEmployee`, `adressEmployee`, `type_contrat`, `specialiteEmployee`, `cnssEmployee`)
- VALUES ('NULL','$cin','$nom','$prenom','$telephone','$adress','$typec','$idspecialiter','$cnss')";
+ VALUES ('$cin','$nom','$prenom','$telephone','$adress','$typec','$specialite','$cnss')";
 $result = mysqli_query($conn, $sql);
 if ($result===true) {	
 	
-
+ 
 	$sql3 =  " SELECT * FROM  employee e , specialiter s WHERE e.cinEmployee='$cin' AND e.specialiteEmployee=s.idspecialiter" ;
 	$result3 = mysqli_query($conn, $sql3);
 	if ($result3->num_rows > 0) {
@@ -72,6 +59,7 @@ if ($result===true) {
 		else { 
 		echo json_encode(array( 'RESPONSE'=>'Aucune employee trouvee' )); 
 			}
+ 
 
 
 
@@ -80,10 +68,7 @@ if ($result===true) {
 
 
 
-
-
-
-
+//echo json_encode(array( 'RESPONSE'=>'Ajout okkkkkkkkkkkkkkk' ));
 
 }else { 
 	echo json_encode(array( 'RESPONSE'=>'Erreur Ajout' )); 
@@ -91,7 +76,7 @@ if ($result===true) {
 
 
 }
-			}	
+		 
 
 		
 		
