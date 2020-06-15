@@ -4,7 +4,7 @@ $postdata = file_get_contents("php://input");
     if (isset($postdata)) {
 		$request = json_decode($postdata); 		
 		
-		$nomfourniseur = $request->nomfourniseur;
+		$nomfourniseur = $request->nomfournisseur;
 		$telephone=$request->telephone;
 		$email=$request->email; 
 		$ville=$request->ville; 
@@ -12,27 +12,22 @@ $postdata = file_get_contents("php://input");
 		$codepostal=$request->codepostal;
 		$adress=$request->adress;
 
-		if ($nomfourniseur){
-
-			$sql3 =  "  select '$nomfourniseur' from fournisseur where nomfr='$nomfourniseur'" ;
 		
-			$result3 = mysqli_query($conn, $sql3);
+
+		$sql3 =  "SELECT `nomfr` FROM `fournisseur` WHERE `nomfr`='$nomfourniseur'"; ;
+		
+		$result3 = mysqli_query($conn, $sql3);
 			if ($result3->num_rows > 0) {	// trouvé
 
-				$tab[] = json_encode(array( 'RESPONSE'=>'fournisseur existant!!!!' ));   //tres important pour retour angular 
+				echo json_encode(array( 'RESPONSE'=>'Fournisseur deja existant' ));   //tres important pour retour angular 
 
-		echo $tab[0]; 
-				
-				exit;
+		  
+			}
+			else{
 
-			}else { 
-				
 			
-
-
-
-
-
+				
+	
 		
 		$sql =  "  INSERT INTO `fournisseur`(`idfr`, `nomfr`, `telfr`, `mailfr`, `villefr`, `fax`, `codepostal`, `adresse`)
 		VALUES ('NULL','$nomfourniseur ','$telephone','$email','$ville','$fax','$codepostal','$adress')";
@@ -66,18 +61,10 @@ $postdata = file_get_contents("php://input");
 		echo $tab[0]; 
 			 
 		}
-	}
-
-
-
-}
- else {
-	$tab[] =json_encode(array( 'RESPONSE'=>'nom fournisseur obligatoir' ));   //tres important pour retour angular 
-
-	echo $tab[0];    //tres important pour retour angular 
-
 	
-}
+
+
+	}
 
 
 
