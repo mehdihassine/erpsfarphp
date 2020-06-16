@@ -9,7 +9,7 @@ $postdata = file_get_contents("php://input");
 		
 		$libelle=$request->libelle;
 		$salairet=$request->salairet;
-		$salairej=$request->salairej;
+		$salairej=round(($salairet/26),2);
 		
 
 	$sql1 =  " select libelle FROM  specialiter WHERE libelle='$libelle'" ;
