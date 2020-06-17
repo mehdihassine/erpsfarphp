@@ -12,18 +12,18 @@ $postdata = file_get_contents("php://input");
 		$salairej=round(($salairet/26),2);
 		
 
-	$sql1 =  " select libelle FROM  specialiter WHERE libelle='$libelle'" ;
-	$result1 = mysqli_query($conn, $sql1);
-	if ($result1->num_rows > 0) {	
+	// $sql1 =  " select libelle FROM  specialiter WHERE libelle='$libelle'" ;
+	// $result1 = mysqli_query($conn, $sql1);
+	// if ($result1->num_rows > 0) {	
 
-		$tab[] = json_encode(array( 'RESPONSE'=>'0' ));  //tres important pour retour angular 
+	// 	$tab[] = json_encode(array( 'RESPONSE'=>'0' ));  //tres important pour retour angular 
 
-		echo $tab[0]; 
-		exit;
+	// 	echo $tab[0]; 
+	// 	exit;
 		
-	}
+	// }
 	
-	else { 
+	// else { 
 		
 		$sql2 =  " INSERT INTO `specialiter`(`idspecialiter`, `libelle`, `salairetotale`, `salairejour`) VALUES ('NULL','$libelle','$salairet','$salairej')" ; 
 		$result2 = mysqli_query($conn, $sql2);
@@ -72,7 +72,7 @@ $postdata = file_get_contents("php://input");
 
 
 
-	}
+	// }
 
 
 
