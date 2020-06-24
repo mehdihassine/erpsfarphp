@@ -10,22 +10,14 @@ $postdata = file_get_contents("php://input");
 		
 				
 		
-		$id_produit = $_GET['id_produit'] ; 
+		$idproduit = $_GET['idproduit'] ; 
 
-
-
-		if(!is_numeric($id_produit)){
-		$sql =  "SELECT * FROM production ,produit 
-        where produit.idProduit=production.id_produit
-		 GROUP BY (dateprod)"  ;
-		}
 		
-		else{
-		$sql =  "SELECT * FROM production ,produit 
-		 where production.id_produit='$id_produit' 
-		 AND  produit.idProduit=production.id_produit
-		 GROUP BY (dateprod)"   ;
-		}
+		$sql =  "SELECT * FROM vente ,produit 
+		 where vente.idproduit='$idproduit' 
+		 AND  produit.idProduit=vente.idproduit ORDER BY (vente.idproduit) ASC
+		    ";
+		
 
 
         $result = mysqli_query($conn, $sql);

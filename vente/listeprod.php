@@ -4,8 +4,8 @@ $postdata = file_get_contents("php://input");
     if (isset($postdata)) {
         $request = json_decode($postdata);
 		
-		$sql =  "SELECT  dateprod, datesys, COUNT(id_produit) as Nbreproduit , SUM(qtevente) as qtevente, 
-		 SUM(montantvente) as montantvente , SUM(benficeProd) as benficeProd FROM production  GROUP BY (dateprod)" ;
+		$sql =  "SELECT  datprod,  COUNT(idproduit) as Nbreproduit , SUM(qtevente) as qtevente, 
+		 SUM(montanttotal) as montantvente , SUM(benefice) as benficeProd FROM vente  GROUP BY (datprod)" ;
 		
         $result = mysqli_query($conn, $sql);
 		if ($result->num_rows > 0) {	

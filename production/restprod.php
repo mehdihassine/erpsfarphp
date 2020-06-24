@@ -30,18 +30,11 @@ $postdata = file_get_contents("php://input");
 			$montantvente=$qtevente*$prixvente; 
 			$benefice=$montantvente-($qtevente*$coutrevien);
 			
-			/*
-			echo("qtprd : $qteprod<br>");
-			echo("qterjt : $qterejeter<br>");
-			echo("qterst : $qterestant<br>");
-			echo("qtevte : $qtevente<br><br>");
-			echo("ctrvt : $coutrevien<br><br>");
-			echo("prvnt : $prixvente<br><br>");	
-			echo("mtvt : $montantvente<br>");
-			echo("bf : $benefice<br>");
-			*/
+		
+			insertvente($conn,$dateprod,$idproduit,$qtevente,$montantvente,$benefice);
+
 			$sql2="UPDATE `production` SET `qteRestProduction`='$qterestant',
-			`qtejeter`='$qterejeter ',`montantvente`='$montantvente',`benficeProd`='$benefice',
+			`qtejeter`='$qterejeter ',
 			`qtevente`='$qtevente' WHERE `id_produit`='$idproduit' AND `nligne`='$nligne'";
 			
         $result = mysqli_query($conn, $sql2);	
@@ -49,37 +42,9 @@ $postdata = file_get_contents("php://input");
 		if ($nbrow>0) { 
 		echo json_encode(array('resp'=>"prod : $dateprod + $nligne = validee  " ));
 		
+		// insert into vente 
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+	
 		
 		
 		}
@@ -101,4 +66,18 @@ $postdata = file_get_contents("php://input");
 		echo ('Erreur prod parametres');  
     }
  
+
+
+
+	function insertvente($conn,$dateprod,$idproduit,$qtevente,$montantvente,$benefice){
+		$req="INSERT INTO `vente`(`idvente`, `datprod`, `idproduit`, `qtevente`, `montanttotal`, `benefice`) 
+		VALUES ('NULL','$dateprod','$idproduit','$qtevente',$montantvente,'$benefice')";
+		$result1 = mysqli_query($conn, $req);	
+		$nbrow = mysqli_affected_rows($conn);
+		if ($nbrow>0) { 
+		
+		}
+		 else {echo json_encode(array( 'resp'=>'vente non validee' ));}
+	
+	}
 ?> 

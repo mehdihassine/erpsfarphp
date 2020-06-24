@@ -11,18 +11,7 @@ $postdata = file_get_contents("php://input");
 		$description=$request->description;
 		$tva=$request->tva;
 		
-		$sql2="SELECT `idtype` FROM `categorie` WHERE `libelle`='$type'";
-		$result2 = mysqli_query($conn, $sql2);
-		if ($result2->num_rows > 0) {	
-
-									while($row =   mysqli_fetch_assoc($result2))
-									$tab[0] =$row; 
-									$idtype = $tab[0]['idtype'];
-		}
-		else { 
-
-		echo json_encode(array( 'RESPONSE'=>'Aucune categorie trouvee' )); 
-		}
+	  
 
 
 
@@ -30,8 +19,8 @@ $postdata = file_get_contents("php://input");
 
 $sql =  "INSERT INTO `produit`(`idProduit`, `diametre`, `nomProduit`,
  `coutrevien`, `prixvente`, `descriptionProduit`, `typeProduit_id`, `tva`) VALUES 
-('NULL',' $diametre','$nom',
-'$cout','$vente','$description','$idtype','$tva')";
+('NULL','$diametre','$nom',
+'$cout','$vente','$description','$type','$tva')";
 $result = mysqli_query($conn, $sql);
 if ($result===true) {	
 	

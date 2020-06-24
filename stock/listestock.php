@@ -5,7 +5,7 @@ $postdata = file_get_contents("php://input");
         $request = json_decode($postdata);
 		
 		$sql =  "SELECT  codearticle, libellearticle ,
-		 SUM(quantite) as quantitetot,emplacement,typestockage
+		 SUM(quantite) as quantitetot,emplacement,typestockage, article.seuilmin
 		 FROM stock , article  WHERE (article.idarticle=stock.article_id  )  GROUP BY article_id " ;
 		
         $result = mysqli_query($conn, $sql);

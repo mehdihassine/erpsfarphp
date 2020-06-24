@@ -37,11 +37,11 @@ $postdata = file_get_contents("php://input",true);
 	$insertdepot =  "INSERT INTO `production`
 	(`idproduction`, `dateprod`, `datesys`,
 	`id_produit`, `qteproduction`, `qteRestProduction`,
-	`qtejeter`, `prixTotal`, `benficeProd`,
+	`qtejeter`, `prixTotal`,
 	`nligne`, `qtevente`) 
 	VALUES ('','$dateprod','$datecreation',
 	'$id_produit','$qteproduction','',
-	'','$montanttotal','',
+	'','$montanttotal',
 	'$nligne1','')";
 		
      $resultInsertdp = mysqli_query($conn, $insertdepot);

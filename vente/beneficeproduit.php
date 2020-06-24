@@ -7,9 +7,9 @@ $postdata = file_get_contents("php://input");
 		
         $request = json_decode($postdata);
 		
-	$id_produit = $_GET['id_produit'];
+		$datprod= $_GET['datprod'];
 
-		$sql =  "SELECT SUM(benefice) as benficetotalproduit FROM vente where idproduit='$id_produit' " ;
+		$sql =  "SELECT SUM(benefice) as benficetotal FROM vente WHERE datprod='$datprod' " ;
         $result = mysqli_query($conn, $sql);
 		
 		if ($result->num_rows > 0) {	
@@ -17,9 +17,9 @@ $postdata = file_get_contents("php://input");
 			while($row = mysqli_fetch_assoc($result))
 			$tab[0] =$row; 
 			
-			if($tab[0]['benficetotalproduit']===null){
+			if($tab[0]['benficetotal']===null){
 				
-		    $tab[0]['benficetotalproduit']=0;
+		    $tab[0]['benficetotal']=0;
 			print json_encode($tab[0]); 
 			
 			}

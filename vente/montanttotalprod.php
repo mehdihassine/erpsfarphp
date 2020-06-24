@@ -9,7 +9,7 @@ $postdata = file_get_contents("php://input");
 		
 	
 
-		$sql =  "SELECT SUM(benficeProd) as benficetotal FROM production " ;
+		$sql =  "SELECT SUM(benefice) as benficetotal FROM vente " ;
         $result = mysqli_query($conn, $sql);
 		
 		if ($result->num_rows > 0) {	
