@@ -66,7 +66,25 @@ $postdata = file_get_contents("php://input");
 		echo ('Erreur prod parametres');  
     }
  
+function insert($conn,$dateprod,$idproduit,$qtevente){
+	$req="SELECT `idproduction` FROM `production` WHERE `dateprod`='$dateprod' and`id_produit`='$idproduit'";
+	$result = mysqli_query($conn, $req);
 
+		if ($result->num_rows > 0) {	
+			while($row = mysqli_fetch_assoc($result))
+			$resultat[0] =$row; 
+			$idproduction =$resultat[0]['idproduction']; 
+			$req2="INSERT INTO `lignevente`(`idproduction`, `produit`, `qte`) VALUES ('$idproduction','$idproduit','$qtevente')";
+			$result1 = mysqli_query($conn, $req2);	
+			if ($result1===true) {
+		
+		       }
+		        else {echo json_encode(array( 'resp'=>'vente non validee' ));}
+		}
+		else{
+			echo json_encode(array( 'resp'=>'idproduction non validee' ));
+		}
+}
 
 
 	function insertvente($conn,$dateprod,$idproduit,$qtevente,$montantvente,$benefice){
@@ -75,7 +93,7 @@ $postdata = file_get_contents("php://input");
 		$result1 = mysqli_query($conn, $req);	
 		$nbrow = mysqli_affected_rows($conn);
 		if ($nbrow>0) { 
-		
+			insert($conn,$dateprod,$idproduit,$qtevente);
 		}
 		 else {echo json_encode(array( 'resp'=>'vente non validee' ));}
 	

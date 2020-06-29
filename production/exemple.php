@@ -8,17 +8,41 @@ $postdata = file_get_contents("php://input",true);
 		
         $request = json_decode($postdata);
 		
-		$dateprod = $request->dateprod;
+		$dateprod =  $request->dateprod;
 		$nligne1 = $request->nligne1;
 		$id_produit = $request->idproduit;
 		$qteproduction = $request->qteproduction;
-
-		
-		
 		$datecreation = date("Y-m-d- H:i:s");
 
- 
- 		$sql =  "SELECT idProduit, prixvente FROM produit where idProduit = '$id_produit'" ;
+	$req="SELECT * FROM production WHERE dateprod ='$dateprod'";
+	$result1 = mysqli_query($conn, $req);	
+	if ($result1->num_rows > 0) {	
+		$row = mysqli_fetch_assoc($result1);
+		$idproduction =$row['idproduction']."<br>";  
+		$sql =  "SELECT idProduit, prixvente FROM produit where idProduit = '$id_produit'" ;
+        $result = mysqli_query($conn, $sql);
+
+		if ($result->num_rows > 0) {	
+			$row = mysqli_fetch_assoc($result); 
+			$codartid =$row['idProduit']; 
+			$prixvente =$row['prixvente']; 
+			$montanttotal = $qteproduction*$prixvente;
+
+			$req2="INSERT INTO  `lignevente` (`idproduction`, `produit`, `qte`) VALUES ('$idproduction', '$codartid', '$qteproduction')";
+			$result2 = mysqli_query($conn, $req2);	
+			if ($result2===true) {	 
+				}
+				else {echo json_encode(array( 'resp'=>'vente non validee' ));}
+	        }
+		else {
+		echo json_encode(array( 'resp'=>"0" ));	    }
+
+
+
+
+	   }
+		else { 
+			$sql =  "SELECT idProduit, prixvente FROM produit where idProduit = '$id_produit'" ;
         $result = mysqli_query($conn, $sql);
 
 		if ($result->num_rows > 0) {	
@@ -64,16 +88,43 @@ $postdata = file_get_contents("php://input",true);
     }
     else {
 	echo json_encode(array( 'resp'=>"0" ));	    }
-	
-	
-	
-	
-	}
-	 else {
-		echo json_encode(array( 'resp'=>'Erreur2' ));  
 		}
 
- function insert($conn,$dateprod,$codartid,$qteproduction){
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+else {
+   echo json_encode(array( 'resp'=>'Erreur2' ));  
+   }
+
+
+
+
+
+
+
+   function insert($conn,$dateprod,$codartid,$qteproduction){
 	$req="SELECT `idproduction` FROM `production` WHERE `dateprod`='$dateprod'";
 	$result = mysqli_query($conn, $req);
 
@@ -96,5 +147,8 @@ $postdata = file_get_contents("php://input",true);
 		else{
 			echo json_encode(array( 'resp'=>'idproduction non validee' ));
 		}
-}
+
+
+	}
+
 ?> 
