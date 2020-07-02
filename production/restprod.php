@@ -6,11 +6,11 @@ $postdata = file_get_contents("php://input");
     if (isset($postdata)) {
 		
         $request = json_decode($postdata);
-		$qteprod=$_GET['qteprod'];
-		$nligne = $_GET['nligne'] ; 
+		$qte=$_GET['qte'];
+		//$nligne = $_GET['nligne'] ; 
 		$dateprod = $_GET['dateprod'] ; 
         $qterejeter=$_GET['qterejeter'];
-		$qterestant=$_GET['qterestant'];
+		$qterest=$_GET['qterest'];
 		$idproduit=$_GET['idproduit'];
 		
 	
@@ -26,24 +26,35 @@ $postdata = file_get_contents("php://input");
 			$prixvente =$resultat[0]['prixvente'];
 			//print ($codartid1[0]['idProduit']); 
 			
-			$qtevente=$qteprod-$qterestant-$qterejeter ; 
+			$qtevente=$qte-$qterest-$qterejeter ; 
 			$montantvente=$qtevente*$prixvente; 
 			$benefice=$montantvente-($qtevente*$coutrevien);
 			
 		
-			insertvente($conn,$dateprod,$idproduit,$qtevente,$montantvente,$benefice);
+		$req="SELECT `idproduction` FROM `production1` WHERE `dateprod`='$dateprod'";
+	$result = mysqli_query($conn, $req);
 
-			$sql2="UPDATE `production` SET `qteRestProduction`='$qterestant',
-			`qtejeter`='$qterejeter ',
-			`qtevente`='$qtevente' WHERE `id_produit`='$idproduit' AND `nligne`='$nligne'";
-			
-        $result = mysqli_query($conn, $sql2);	
-		$nbrow = mysqli_affected_rows($conn);	
-		if ($nbrow>0) { 
-		echo json_encode(array('resp'=>"prod : $dateprod + $nligne = validee  " ));
+		if ($result->num_rows > 0) {	
+			while($row = mysqli_fetch_assoc($result))
+			$resultat[0] =$row; 
+			$idproduction =$resultat[0]['idproduction']; 
 		
-		// insert into vente 
-		
+			$req2="UPDATE `ligneproduction` SET
+		`qterest`='$qterest',`qterejeter`='$qterejeter',`qtevente`='$qtevente',`montantvente`='$montantvente',`benefice`='$benefice' WHERE produit='$idproduit' AND idproduction='$idproduction'" ;
+			$result1 = mysqli_query($conn, $req2);	
+			$nbrow = mysqli_affected_rows($conn);
+			if ($nbrow>0) { 
+				echo json_encode(array('resp'=>"prod : $dateprod + $idproduit = validee  " ));
+				
+				
+				}
+				else {echo json_encode(array( 'resp'=>'vente non validee' ));}
+					
+		}
+		else{
+			echo json_encode(array( 'resp'=>'idproduction non validee' ));
+		}
+     
 	
 		
 		
@@ -55,47 +66,13 @@ $postdata = file_get_contents("php://input");
 	
 
 
-		}
-		else {
-		echo ("mehdi ma yefhem chay");
-		}
-		
+	
 }
 
     else {
 		echo ('Erreur prod parametres');  
     }
  
-function insert($conn,$dateprod,$idproduit,$qtevente){
-	$req="SELECT `idproduction` FROM `production` WHERE `dateprod`='$dateprod' and`id_produit`='$idproduit'";
-	$result = mysqli_query($conn, $req);
 
-		if ($result->num_rows > 0) {	
-			while($row = mysqli_fetch_assoc($result))
-			$resultat[0] =$row; 
-			$idproduction =$resultat[0]['idproduction']; 
-			$req2="INSERT INTO `lignevente`(`idproduction`, `produit`, `qte`) VALUES ('$idproduction','$idproduit','$qtevente')";
-			$result1 = mysqli_query($conn, $req2);	
-			if ($result1===true) {
-		
-		       }
-		        else {echo json_encode(array( 'resp'=>'vente non validee' ));}
-		}
-		else{
-			echo json_encode(array( 'resp'=>'idproduction non validee' ));
-		}
-}
-
-
-	function insertvente($conn,$dateprod,$idproduit,$qtevente,$montantvente,$benefice){
-		$req="INSERT INTO `vente`(`idvente`, `datprod`, `idproduit`, `qtevente`, `montanttotal`, `benefice`) 
-		VALUES ('NULL','$dateprod','$idproduit','$qtevente',$montantvente,'$benefice')";
-		$result1 = mysqli_query($conn, $req);	
-		$nbrow = mysqli_affected_rows($conn);
-		if ($nbrow>0) { 
-			insert($conn,$dateprod,$idproduit,$qtevente);
-		}
-		 else {echo json_encode(array( 'resp'=>'vente non validee' ));}
 	
-	}
 ?> 

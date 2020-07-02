@@ -8,17 +8,17 @@ $postdata = file_get_contents("php://input",true);
 		
         $request = json_decode($postdata);
 		
-		$dateprod =  $request->dateprod;
+		$dateprod =$request->dateprod;
 		$nligne1 = $request->nligne1;
-		$id_produit = $request->idproduit;
+		$id_produit =$request->idproduit;
 		$qteproduction = $request->qteproduction;
 		$datecreation = date("Y-m-d- H:i:s");
-
-	$req="SELECT * FROM production WHERE dateprod ='$dateprod'";
+$qte=0;
+	$req="SELECT * FROM production1 WHERE dateprod ='$dateprod'";
 	$result1 = mysqli_query($conn, $req);	
 	if ($result1->num_rows > 0) {	
 		$row = mysqli_fetch_assoc($result1);
-		$idproduction =$row['idproduction']."<br>";  
+		$idproduction =$row['idproduction'];  
 		$sql =  "SELECT idProduit, prixvente FROM produit where idProduit = '$id_produit'" ;
         $result = mysqli_query($conn, $sql);
 
@@ -28,9 +28,11 @@ $postdata = file_get_contents("php://input",true);
 			$prixvente =$row['prixvente']; 
 			$montanttotal = $qteproduction*$prixvente;
 
-			$req2="INSERT INTO  `lignevente` (`idproduction`, `produit`, `qte`) VALUES ('$idproduction', '$codartid', '$qteproduction')";
+			$req2="INSERT INTO  `ligneproduction` (`idproduction`, `produit`, `qte`, `qterest`, `qterejeter`, `qtevente`,`montantvente`,`benefice`) VALUES ('$idproduction', '$codartid', '$qteproduction','$qte','$qte','$qte','$montanttotal','$qte' )";
 			$result2 = mysqli_query($conn, $req2);	
-			if ($result2===true) {	 
+			if ($result2===true) {
+				$resp1 = array ("$idproduction","$codartid","$qteproduction");
+				echo json_encode ($resp1);		
 				}
 				else {echo json_encode(array( 'resp'=>'vente non validee' ));}
 	        }
@@ -58,15 +60,7 @@ $postdata = file_get_contents("php://input",true);
 			
 			
 			
-	$insertdepot =  "INSERT INTO `production`
-	(`idproduction`, `dateprod`, `datesys`,
-	`id_produit`, `qteproduction`, `qteRestProduction`,
-	`qtejeter`, `prixTotal`,
-	`nligne`, `qtevente`) 
-	VALUES ('','$dateprod','$datecreation',
-	'$id_produit','$qteproduction','',
-	'','$montanttotal',
-	'$nligne1','')";
+	$insertdepot =  "INSERT INTO `production1`(`idproduction`, `dateprod`, `datesys`, `qteproduction`) VALUES ('','$dateprod','$datecreation','$qte')";
 		
      $resultInsertdp = mysqli_query($conn, $insertdepot);
 	 $nbrow = mysqli_affected_rows($conn);
@@ -124,8 +118,8 @@ else {
 
 
 
-   function insert($conn,$dateprod,$codartid,$qteproduction){
-	$req="SELECT `idproduction` FROM `production` WHERE `dateprod`='$dateprod'";
+   function insert($conn,$dateprod,$codartid,$qteproduction,$montanttotal ){
+	$req="SELECT `idproduction` FROM `production1` WHERE `dateprod`='$dateprod'";
 	$result = mysqli_query($conn, $req);
 
 		if ($result->num_rows > 0) {	
@@ -133,13 +127,14 @@ else {
 			$resultat[0] =$row; 
 			$idproduction =$resultat[0]['idproduction']; 
 
-			$req2="INSERT INTO `lignevente`(`idproduction`, `produit`, `qte`) VALUES ('$idproduction','$codartid','$qteproduction')";
+			$req2="INSERT INTO `ligneproduction`(`idproduction`, `produit`, `qte`, `qterest`, `qterejeter`, `qtevente`,`montantvente`,`benefice`) VALUES ('$idproduction','$codartid','$qteproduction','$qte','$qte','$qte','$montanttotal','$qte' )";
+			$req3="INSERT INTO `vente`(`idvente`, `datprod`, `idproduction`, `qtevente`, `montanttotal`, `benefice`) VALUES ('','$dateprod','$idproduction','$qte','$qte','$qte')";
+			$result2 = mysqli_query($conn, $req3);
 			$result1 = mysqli_query($conn, $req2);	
-			$nbrow = mysqli_affected_rows($conn);
-			if ($nbrow>0) { 
+			// $nbrow = mysqli_affected_rows($conn);
+			if (($result1->num_rows > 0) || ($result2->num_rows > 0)){ 
 			
-				
-				
+			
 				}
 				else {echo json_encode(array( 'resp'=>'vente non validee' ));}
 					

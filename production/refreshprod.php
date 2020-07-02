@@ -5,7 +5,9 @@ $postdata = file_get_contents("php://input");
         $request = json_decode($postdata);
 		$dateprod= $_GET['dateprod'];
 		
-		$sql =  "SELECT * FROM production p ,produit pr WHERE dateprod='$dateprod' AND p.id_produit=pr.idProduit" ;
+		$sql =   "SELECT * FROM `ligneproduction` l ,`production1` pr,`produit` p WHERE
+		pr.dateprod='$dateprod' AND l.idproduction=pr.idproduction 
+		AND l.produit=p.idProduit "; 
 		
         $result = mysqli_query($conn, $sql);
 		if ($result->num_rows > 0) {	
