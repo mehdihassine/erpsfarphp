@@ -7,10 +7,15 @@ $postdata = file_get_contents("php://input");
 		
         $request = json_decode($postdata);
 		
-		$dateprod = $_GET['dateprod'] ;
-		$nligne = $_GET['nligne'] ;
+		$dateprod =$_GET['dateprod'] ;
+		$produit =$_GET['produit'] ;
+		$req="SELECT * FROM production1 WHERE dateprod ='$dateprod'";
+		$result1 = mysqli_query($conn, $req);	
+		if ($result1->num_rows > 0) {	
+			$row = mysqli_fetch_assoc($result1);
+			$idproduction =$row['idproduction'];  
 
-		$sql =  "DELETE FROM production WHERE dateprod='$dateprod' AND nligne='$nligne'";
+		$sql =  "DELETE FROM ligneproduction WHERE idproduction='$idproduction' AND produit='$produit'";
         $result = mysqli_query($conn, $sql);
 		
 		
@@ -18,13 +23,15 @@ $postdata = file_get_contents("php://input");
 		
 		if ($nbrow>0) { 
 		
-		echo json_encode(array('resp'=>"ln $nligne : cdv $ncommande supp" ));
+		echo json_encode(array('resp'=>"ln $produit : cdv $dateprod supp" ));
 		
 		}
 		
 		else {echo json_encode(array( 'resp'=>'erreur suup ln'));}
 	
-
+	}
+		
+	else {echo json_encode(array( 'resp'=>'erreur suup prod'));}
 	
     }
 

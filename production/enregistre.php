@@ -4,7 +4,7 @@ include('../config.php');
 $postdata = file_get_contents("php://input"); 
     if (isset($postdata)) {
         $request = json_decode($postdata);
-		$dateprod ="1072020";;//$_GET['dateprod'] ; 
+		$dateprod =$_GET['dateprod'] ; 
         
 
 		$sql="SELECT SUM(qtevente) as qtevente ,SUM(montantvente) as montant ,SUM(benefice) as benefice FROM ligneproduction l ,production1 pr WHERE pr.dateprod='$dateprod' and l.idproduction=pr.idproduction";
@@ -14,7 +14,9 @@ $postdata = file_get_contents("php://input");
             $qtevente =$row['qtevente']; 
             $montant =$row['montant']; 
             $benefice =$row['benefice']; 
-            echo json_encode(array('resp'=>"prod : $dateprod + $montant+ $benefice= validee  " ));
+           
+		   
+
             upadate ($conn,$qtevente,$montant,$benefice,$dateprod);           
 		}
 		

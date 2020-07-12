@@ -10,7 +10,7 @@ $postdata = file_get_contents("php://input");
 		$dateprod = $_GET['dateprod'] ;
 		
 
-		$sql =  "DELETE FROM production WHERE dateprod='$dateprod' ";
+		$sql =  "DELETE FROM production1 WHERE dateprod='$dateprod' ";
         $result = mysqli_query($conn, $sql);
 		
 		

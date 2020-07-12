@@ -8,7 +8,9 @@ $postdata = file_get_contents("php://input");
         $request = json_decode($postdata);
 		$nfacture = $_GET['nfacture'] ; 
 
-		$sql =  "SELECT * FROM facturevente f , produit p  where f.nfacture ='$nfacture' and f.idproduit=p.idProduit order by f.nligne" ;
+		$sql =  "SELECT * FROM `lignevente` l , `facturevente` f , `produit` p 
+		WHERE f.nfacture='$nfacture' 
+		AND l.idfacture=f.idfacture AND p.idProduit=l.idproduit " ;
         //$sql =  "SELECT * FROM recep  where nfacture ='$nfacture' order by nligne" ;
 
 		$result = mysqli_query($conn, $sql);

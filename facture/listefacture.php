@@ -4,7 +4,7 @@ $postdata = file_get_contents("php://input");
     if (isset($postdata)) {
         $request = json_decode($postdata);
 		
-		$sql =  "SELECT nfacture, types, COUNT(nligne) as nligne, datesys, SUM(montantttc) as montanttotal FROM facturevente GROUP BY nfacture " ;
+		$sql =  "SELECT nfacture, types, datesys FROM facturevente GROUP BY nfacture " ;
 		$sql2 =  "SELECT nfacture, types, COUNT(nligne) as nligne, datesys, SUM(montantttc) as montanttotal FROM factureachat GROUP BY nfacture " ;
 		$sql3 =  "SELECT nfacture, types, COUNT(nligne) as nligne, datesys, SUM(montantttc) as montanttotal FROM facturedivers GROUP BY nfacture " ;
 		
