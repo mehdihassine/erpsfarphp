@@ -7,10 +7,10 @@ $postdata = file_get_contents("php://input");
 		
         $request = json_decode($postdata);
 		
-		$dateprod = $_GET['dateprod'] ;
+		$idvente = $_GET['idvente'] ;
 		
 
-		$sql =  "DELETE FROM vente WHERE dateprod='$dateprod' ";
+		$sql =  "DELETE FROM vente WHERE idvente='$idvente' ";
         $result = mysqli_query($conn, $sql);
 		
 		
@@ -18,7 +18,7 @@ $postdata = file_get_contents("php://input");
 		
 		if ($nbrow>0) { 
 		
-		echo json_encode(array('resp'=>" prod $dateprod supp" ));
+		echo json_encode(array('resp'=>" prod $idvente supp" ));
 		
 		}
 		

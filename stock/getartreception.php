@@ -8,7 +8,7 @@ $postdata = file_get_contents("php://input");
         $request = json_decode($postdata);
 		$nreception = $_GET['nreception'] ; 
 
-		$sql =  "SELECT * FROM stock s , article a,fournisseur f  where s.nreception='$nreception'  and s.article_id=a.idarticle and s.fournisseur_id=f.idfr  order by s.nligne" ;
+		$sql =  "SELECT * FROM lignestock l,stock s , article a,fournisseur f  where s.nreception='$nreception' and l.idreception=s.idstock and l.idarticle=a.idarticle and s.fournisseur_id=f.idfr  " ;
         //$sql =  "SELECT * FROM recep  where nfacture ='$nfacture' order by nligne" ;
 
 		$result = mysqli_query($conn, $sql);

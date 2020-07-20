@@ -4,9 +4,9 @@ $postdata = file_get_contents("php://input");
     if (isset($postdata)) {
         $request = json_decode($postdata);
 		$etat='valide';
-		$sql =  "SELECT  nreception, COUNT(article_id) as nbrarticle ,nomfr,
+		$sql =  "SELECT  nreception, SUM(idarticle) as nbrarticle ,nomfr,
 		numfact, SUM(quantite) as quantiterecep,dateachat,
-		 SUM(prixTotal) as prixTotal ,etat FROM stock , fournisseur  WHERE  stock.etat='$etat' and (fournisseur.idfr=stock.fournisseur_id  )  GROUP BY nreception " ;
+		 SUM(prixTotal) as prixTotal ,etat FROM stock , fournisseur ,lignestock l  WHERE  stock.etat='$etat' and (fournisseur.idfr=stock.fournisseur_id  ) And( l.idreception=stock.idstock) GROUP BY nreception " ;
 		
         $result = mysqli_query($conn, $sql);
 		if ($result->num_rows > 0) {	

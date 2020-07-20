@@ -3,9 +3,9 @@ include('../config.php');
 $postdata = file_get_contents("php://input"); 
     if (isset($postdata)) {
         $request = json_decode($postdata);
-		$nreception= $_GET['nreception'];
+		$nreception=$_GET['nreception'];
 		
-		$sql =  "SELECT * FROM stock s ,article a WHERE nreception='$nreception' AND s.article_id=a.idarticle" ;
+		$sql =  "SELECT * FROM lignestock l ,stock s ,article a WHERE s.nreception='$nreception' AND s.idstock=l.idreception AND a.idarticle=l.idarticle" ;
 		
         $result = mysqli_query($conn, $sql);
 		if ($result->num_rows > 0) {	

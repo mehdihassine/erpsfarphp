@@ -1,13 +1,18 @@
 <?php
 include('../config.php');
-$postdata = file_get_contents("php://input"); 
-
-    if (isset($postdata)) {
-
-        $request = json_decode($postdata);
-		$mail =$_GET['email'] ; 
-
-		$sql =  " SELECT * FROM `user` WHERE `email`='$mail'" ;
+$postdata = file_get_contents("php://input");
+if (isset($postdata)) {
+    $mail =$_GET['mail'] ; 
+    $string = "";
+    $chaine = "0a1b2c3d4e5f6j7h8i9jklmnopqrstuvwxyz";
+    srand((double)microtime()*1000000);
+    for($i=0; $i<8; $i++) {
+    $string .= $chaine[rand()%strlen($chaine)];
+    }
+    
+    $random=substr(str_shuffle("0a1b2c3d4e5f6j7h8i9jklmnopqrstuvwxyz"),0,$lenght); 
+    $lenght=8;
+	$sql =  " SELECT * FROM `user` WHERE `email`='$mail'" ;
 		
         $result = mysqli_query($conn, $sql);
 		if ($result->num_rows > 0) {	
@@ -24,17 +29,12 @@ $loginuser = $tab[0]["loginuser"];
 $mpduser = $tab[0]["mpduser"];
 $email = $tab[0]["email"];
 
-$lenght=8;
-$random=substr(str_shuffle("0a1b2c3d4e5f6j7h8i9jklmnopqrstuvwxyz"),0,$lenght); 
-$sql =  "UPDATE `user` SET `mpduser`='$random'
-		 WHERE `iduser`='$iduser  ' "; 
-		$result = mysqli_query($conn, $sql);
-		if ($result===true) {	
-$destinataire =$email ;
-
+$sql =  "UPDATE `user` SET `mpduser`='$string' WHERE`email`='$email'"; 
+        $result = mysqli_query($conn, $sql);
+        if ($result===true) {
+            $destinataire=$mail;
+           
 $expediteur ='mehdihassine23@gmail.com'; 
-
-$objet ='Recuperation mot de Passe '; 
 $headers='MIME-Version: 1.0' . "\n"; 
 $headers .= 'From: "ERP Boulangerie & patesserie Sfar"<'.$expediteur.'>'."\n"; 
 $headers.= 'Content-type: text/html; charset="uft-8"'."\n";
@@ -42,7 +42,6 @@ $headers.='Content-transfer-Encoding: 8bit';
 $headers .= 'Reply-To: '.$expediteur."\n"; // Mail de reponse//
 
 $headers .= 'Delivered-to: '.$destinataire."\n"; 
-       
 $message = '<head>
 		<title>Internal_email-29</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -138,7 +137,7 @@ $message = '<head>
 												<tr>
 													<td data-color="text" data-size="size text" data-min="10" data-max="26" data-link-color="link text color" data-link-style="font-weight:bold; text-decoration:underline; color:#40aceb;" align="center" style="font:bold 16px/25px Arial, Helvetica, sans-serif; color:#888; padding:0 0 23px;">
 												Cher Utilisateur '.$nomuser.'&nbsp;'.$prenomuser.' <br>
-												Votre Mot de passe est: <b>'.$mpduser.'<b>
+												Votre Mot de passe est: <b>'.$string.'<b>
 							 
 													</td>
 												</tr>
@@ -153,10 +152,10 @@ $message = '<head>
 					</table>
 
 ';
-if (mail($destinataire, $objet, $message, $headers)) 
-{
-	echo json_encode(array( 'RESPONSE'=>'Votre message a bien été envoyé' )); 
-	echo $random;
+
+if(mail($destinataire,"Recuperation mot de Passe",$message,$headers)){
+    echo json_encode(array( 'RESPONSE'=>'Votre message a bien été envoyé' )); 
+	echo $nvmdp;
 	
 }
 else 
@@ -165,22 +164,17 @@ else
 {
 	echo json_encode(array( 'RESPONSE2'=>'Votre message n\'a pas pu être envoyé' )); 
 }
-		}
-		else{
-			echo json_encode(array( 'RESPONSE'=>'Erreur modification ' )); 
-		}
+}
+else{
+    echo json_encode(array( 'RESPONSE'=>'Erreur modification ' )); 
+}
 
+}else { 
+    echo json_encode(array( 'RES'=>'Aucune email trouvee' )); 
+}
 
-
-
-
-
-		}else { 
-			echo json_encode(array( 'RES'=>'Aucune email trouvee' )); 
-		}
-    }
-    else {
-		echo json_encode(array( 'RES'=>'Erreur reception parametres' ));  
-    }
- 
-?>  
+}
+else {
+    echo json_encode(array( 'RES'=>'Erreur reception parametres' ));  
+}
+?>

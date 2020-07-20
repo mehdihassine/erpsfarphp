@@ -5,8 +5,7 @@ $postdata = file_get_contents("php://input");
         $request = json_decode($postdata);
 		$datprod = $_GET['datprod'] ; 
 		
-			$sql =  " SELECT  datprod,  COUNT(idproduit) as Nbreproduit , SUM(qtevente) as qtevente, 
-			SUM(montanttotal) as montantvente , SUM(benefice) as benficeProd FROM vente where datprod='$datprod' GROUP by (datprod) " ;
+			$sql =  "SELECT * FROM `vente` WHERE `date_ajout`='$datprod'";
 		
         $result = mysqli_query($conn, $sql);
 		

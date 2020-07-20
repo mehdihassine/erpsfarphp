@@ -19,7 +19,7 @@ $postdata = file_get_contents("php://input");
 		$result = mysqli_query($conn, $sql);
 
 		if ($result->num_rows > 0) {	
-			while($row = mysqli_fetch_assoc($result))
+			while($row = mysqli_fetch_assoc($result))// retour le resultat sur forme de tableau 
 			$resultat[0] =$row; 
 		
 			$coutrevien =$resultat[0]['coutrevien']; 

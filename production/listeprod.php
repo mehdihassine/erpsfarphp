@@ -4,18 +4,6 @@ $postdata = file_get_contents("php://input");
     if (isset($postdata)) {
         $request = json_decode($postdata);
 		
-
-
-
-
-
-
-
-
-
-
-		
-		
 		$sql="SELECT datesys,COUNT(produit) as nbrproduit, dateprod,SUM(qte) as qteproduction FROM `ligneproduction` l ,`production1` pr,`produit` p WHERE
 		  l.idproduction=pr.idproduction 
 		AND l.produit=p.idProduit 
@@ -36,4 +24,4 @@ $postdata = file_get_contents("php://input");
     }
 	
 	// 			
-?> 
+?>
